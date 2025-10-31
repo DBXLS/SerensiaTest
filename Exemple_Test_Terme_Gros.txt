@@ -1,0 +1,73 @@
+==========================================================
+             TEST FONCTIONNEL - API Serensia
+==========================================================
+
+
+Pourvérifier le comportement de l'API pour la recherche de termes 
+approchants du mot "gros" ou "gras" dans une liste de candidats.
+
+----------------------------------------------------------
+1️ Données d'entrée
+----------------------------------------------------------
+
+Terme à rechercher :
+=> "gros"
+
+Liste de candidats :
+=> ["gros", "gras", "graisse", "agressif", "go", "ros", "gro"]
+
+Nombre de suggestions demandées :
+=> 2
+
+----------------------------------------------------------
+2 Calcul attendu (distance de remplacement)
+----------------------------------------------------------
+
+- gros     → 0 différence
+- gras     → 1 différence
+- graisse  → 2 différences
+- agressif → 1 différence
+- go       → pas du tout similaire (pas assez de lettres)
+- ros      → pas du tout similaire (pas assez de lettres)
+- gro      → pas du tout similaire (pas assez de lettres)
+
+----------------------------------------------------------
+3 Règle de tri
+----------------------------------------------------------
+Les résultats sont triés par :
+  1. distance minimale de remplacement
+  2. écart de longueur avec le mot recherché
+  3. ordre alphabétique
+
+----------------------------------------------------------
+4 Résultat attendu (Top 2)
+----------------------------------------------------------
+
+Suggestions :
+=> ["gros", "gras"]
+
+Réponse JSON complète :
+{
+  "term": "gros",
+  "suggestions": ["gros", "gras"]
+}
+
+----------------------------------------------------------
+5️ Test via Swagger
+----------------------------------------------------------
+URL :
+=> https://localhost:7102/swagger
+
+Endpoint :
+=> POST /suggestion
+
+Body à copier dans Swagger :
+{
+  "term": "gros",
+  "candidates": ["gros", "gras", "graisse", "agressif", "go", "ros", "gro"],
+  "topN": 2
+}
+
+----------------------------------------------------------
+Fin du test
+==========================================================
