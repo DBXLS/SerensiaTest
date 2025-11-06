@@ -3,6 +3,8 @@ using Serensia.ApiKata;
 using Serensia.ApiKata.Models;
 
 
+
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();
@@ -16,13 +18,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
 
 app.MapPost("/suggestion", Results<Ok<SerensiaResponse>, BadRequest<string>> (
     SerensiaRequest req, SernesiaSuggestion result) =>
@@ -52,3 +47,5 @@ app.MapPost("/suggestion", Results<Ok<SerensiaResponse>, BadRequest<string>> (
 
 app.Run();
 
+// Requis pour les tests d'intégration (WebApplicationFactory<Program>)
+public partial class Program { }

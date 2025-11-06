@@ -1,0 +1,187 @@
+[
+  {
+    "Id": "TC01",
+    "Description": "Exemple fourni : chercher 2 termes approchants de 'gros'",
+    "Term": "gros",
+    "Candidates": [
+      "gros",
+      "gras",
+      "graisse",
+      "agressif",
+      "go",
+      "ros",
+      "gro"
+    ],
+    "TopN": 2,
+    "Expected": [
+      "gros",
+      "gras"
+    ],
+    "Notes": "go/ros/gro sont plus courts que 'gros' → exclus."
+  },
+  {
+    "Id": "TC02",
+    "Description": "Exact match + contenant exact plus long",
+    "Term": "bar",
+    "Candidates": [
+      "foo",
+      "bar",
+      "baz",
+      "foobar"
+    ],
+    "TopN": 2,
+    "Expected": [
+      "bar",
+      "foobar"
+    ],
+    "Notes": "‘foobar’ contient ‘bar’ (score 0) mais écart de longueur plus grand → vient après ‘bar’."
+  },
+  {
+    "Id": "TC03",
+    "Description": "Égalités de score → départagées par écart de longueur puis ordre alphabétique",
+    "Term": "abcd",
+    "Candidates": [
+      "abcx",
+      "xabc",
+      "abcy",
+      "abcd",
+      "abca",
+      "zzzzzz"
+    ],
+    "TopN": 3,
+    "Expected": [
+      "abcd",
+      "abca",
+      "abcx"
+    ],
+    "Notes": "abca/abcx/abcy ont score 1 et même longueur → ordre alpha. xabc a un score bien plus élevé."
+  },
+  {
+    "Id": "TC04",
+    "Description": "Terme plus long que tous les candidats → aucun résultat",
+    "Term": "ccccc",
+    "Candidates": [
+      "aa",
+      "bbb",
+      "cccc"
+    ],
+    "TopN": 5,
+    "Expected": [],
+    "Notes": ""
+  },
+  {
+    "Id": "TC05",
+    "Description": "Candidats doivent avoir une longueur ≥ terme",
+    "Term": "abcd",
+    "Candidates": [
+      "ab",
+      "abc",
+      "abcd"
+    ],
+    "TopN": 3,
+    "Expected": [
+      "abcd"
+    ],
+    "Notes": "‘ab’ et ‘abc’ sont trop courts."
+  },
+  {
+    "Id": "TC06",
+    "Description": "Glissement de fenêtre (sous-chaîne) : exact contenu vs proches",
+    "Term": "gros",
+    "Candidates": [
+      "xyzgrosabc",
+      "xxgrasxx",
+      "agressif"
+    ],
+    "TopN": 3,
+    "Expected": [
+      "xyzgrosabc",
+      "agressif",
+      "xxgrasxx"
+    ],
+    "Notes": "‘xyzgrosabc’ score 0. ‘agressif’ et ‘xxgrasxx’ ont score 1, même écart de longueur → ordre alpha."
+  },
+  {
+    "Id": "TC07",
+    "Description": "Égalité parfaite (score et longueur) → tri alphabétique",
+    "Term": "abc",
+    "Candidates": [
+      "abq",
+      "abr",
+      "abp",
+      "xxxabp"
+    ],
+    "TopN": 2,
+    "Expected": [
+      "abp",
+      "abq"
+    ],
+    "Notes": "‘abp/abq/abr’ : score=1, gap=0; ‘xxxabp’ : score=1 mais gap=3 donc après."
+  },
+  {
+    "Id": "TC08",
+    "Description": "Renvoyer moins de N quand il n’y a pas assez de similaires",
+    "Term": "test",
+    "Candidates": [
+      "te",
+      "tes",
+      "tess",
+      "testing",
+      "toast"
+    ],
+    "TopN": 10,
+    "Expected": [
+      "testing",
+      "tess",
+      "toast"
+    ],
+    "Notes": "‘testing’ contient ‘test’ (score 0), ‘tess’ score 1, ‘toast’ meilleur score 2 via fenêtre."
+  },
+  {
+    "Id": "TC09",
+    "Description": "Doublons d’entrée : la sortie ne doit pas répéter",
+    "Term": "apple",
+    "Candidates": [
+      "apple",
+      "apple",
+      "appls",
+      "apricot"
+    ],
+    "TopN": 4,
+    "Expected": [
+      "apple",
+      "appls",
+      "apricot"
+    ],
+    "Notes": "Le moteur doit dédupliquer avant tri."
+  },
+  {
+    "Id": "TC10",
+    "Description": "Terme vide → aucun résultat",
+    "Term": "",
+    "Candidates": [
+      "anything",
+      "goes"
+    ],
+    "TopN": 5,
+    "Expected": [],
+    "Notes": "Comportement défini : on renvoie []."
+  },
+  {
+    "Id": "TC12",
+    "Description": "Candidats déjà normalisés (précondition)",
+    "Term": "coeur",
+    "Candidates": [
+      "coeur",
+      "coeurx",
+      "coeur123"
+    ],
+    "TopN": 3,
+    "Expected": [
+      "coeur",
+      "coeurx",
+      "coeur123"
+    ],
+    "Notes": "Conforme à la précondition : minuscules alphanumériques uniquement."
+  }
+]

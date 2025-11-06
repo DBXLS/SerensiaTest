@@ -1,4 +1,7 @@
-﻿using System.Text.RegularExpressions;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace Serensia.ApiKata
 {
@@ -11,15 +14,18 @@ namespace Serensia.ApiKata
             if (topN <= 0) return Array.Empty<string>();
 
             var query = Normalisation(term);
-            int qlen = query.Length;
+            if (query.Length == 0) return Array.Empty<string>();   // important
 
+            int qlen = query.Length;
             var scored = new List<(string word, int distance, int lengthDelta)>();
 
+            // ⚠️ PAS de Distinct ici : les tests NUnit veulent garder les doublons
             foreach (var raw in candidates)
             {
                 if (string.IsNullOrWhiteSpace(raw)) continue;
+
                 var word = Normalisation(raw);
-                if (word.Length < qlen) continue; // pas assez de lettres
+                if (word.Length < qlen) continue; // trop court → exclu
 
                 int best = Min_Fenetre(word, query);
                 scored.Add((raw, best, Math.Abs(word.Length - qlen)));
@@ -33,18 +39,19 @@ namespace Serensia.ApiKata
                 .Select(s => s.word)
                 .ToList();
         }
+
         private static int Min_Fenetre(string word, string query)
         {
             int qlen = query.Length;
-            int wlen = word.Length;
             int best = int.MaxValue;
 
-            for (int i = 0; i + qlen <= wlen; i++)
+            for (int i = 0; i + qlen <= word.Length; i++)
             {
                 int d = GetDiff_Score(word.AsSpan(i, qlen), query.AsSpan());
                 if (d < best) best = d;
-                if (best == 0) break; 
+                if (best == 0) break;
             }
+
             return best;
         }
 
@@ -56,9 +63,9 @@ namespace Serensia.ApiKata
             int diff = 0;
             for (int i = 0; i < dest.Length; i++)
                 if (dest[i] != src[i]) diff++;
-
             return diff;
         }
+
         private static string Normalisation(string s)
         {
             var lower = s.ToLowerInvariant();

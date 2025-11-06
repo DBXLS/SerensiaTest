@@ -1,9 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36109.1 d17.14
+VisualStudioVersion = 17.14.36109.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Serensia.ApiKata", "Serensia.ApiKata\Serensia.ApiKata.csproj", "{FACFA769-9E31-4B03-8935-3608A72E4A5B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Serensia.ApiKata.Tests", "Serensia.ApiKata.Tests\Serensia.ApiKata.Tests.csproj", "{3E77AE1B-FDBD-4AAE-9E68-3E4557326E00}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Serensia.ApiTest", "Serensia.ApiTest\Serensia.ApiTest.csproj", "{340E13B0-EF05-4BA3-8397-67AC59C48483}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{FACFA769-9E31-4B03-8935-3608A72E4A5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FACFA769-9E31-4B03-8935-3608A72E4A5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FACFA769-9E31-4B03-8935-3608A72E4A5B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E77AE1B-FDBD-4AAE-9E68-3E4557326E00}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E77AE1B-FDBD-4AAE-9E68-3E4557326E00}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E77AE1B-FDBD-4AAE-9E68-3E4557326E00}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E77AE1B-FDBD-4AAE-9E68-3E4557326E00}.Release|Any CPU.Build.0 = Release|Any CPU
+		{340E13B0-EF05-4BA3-8397-67AC59C48483}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{340E13B0-EF05-4BA3-8397-67AC59C48483}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{340E13B0-EF05-4BA3-8397-67AC59C48483}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{340E13B0-EF05-4BA3-8397-67AC59C48483}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
